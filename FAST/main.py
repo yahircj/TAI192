@@ -25,7 +25,22 @@ def home():
 def leerUsuarios():
     return {"Los usuarios registrados son: ": usuarios}
 
+#endpoint consulta todos
+@app.post('/addUsuarios/', tags=['operaciones CRUD'])
+def agregarUsuario(usuario:dict):
+    for usr in usuarios:
+        if usr["id"]== usuario.get("id"):
+            raise HTTPException(status_code=400, detail="Id existente")
+    usuarios.append(usuario)
+    return usuario
 
+@app.put('/actualizarUsuarios/{id}', tags=['operaciones CRUD'])
+def actualizarUsuario(id:int, usuario:dict):
+    for index,usr in enumerate(usuarios):
+        if usr["id"]== id:
+                usuarios[index].update(usuario)
+                return usuarios(index)
+    raise HTTPException(status_code=400, detail="Id inexistente")
 
 
 
