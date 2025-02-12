@@ -25,7 +25,7 @@ def home():
 def leerUsuarios():
     return {"Los usuarios registrados son: ": usuarios}
 
-#endpoint consulta todos
+#endpoint Añadir
 @app.post('/addUsuarios/', tags=['operaciones CRUD'])
 def agregarUsuario(usuario:dict):
     for usr in usuarios:
@@ -34,6 +34,7 @@ def agregarUsuario(usuario:dict):
     usuarios.append(usuario)
     return usuario
 
+#endpoint actualizar
 @app.put('/actualizarUsuarios/{id}', tags=['operaciones CRUD'])
 def actualizarUsuario(id:int, usuario:dict):
     for index,usr in enumerate(usuarios):
@@ -41,7 +42,6 @@ def actualizarUsuario(id:int, usuario:dict):
                 usuarios[index].update(usuario)
                 return usuarios(index)
     raise HTTPException(status_code=400, detail="Id inexistente")
-
 
 
 """ #endpoit promedio
