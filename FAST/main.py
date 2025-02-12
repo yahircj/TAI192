@@ -1,7 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from typing import Optional
 
-app = FastAPI()
+app = FastAPI(
+    title='mi primer api',
+    description= 'Jonathan Yahir Contreras',
+    version='1.0.1'
+)
 
 usuarios = [
     {"id": 1, "nombre": "Alfredo", "edad": 21},
@@ -16,7 +20,16 @@ usuarios = [
 def home():
     return {'hello':'world FastAPI'}
 
-#endpoit promedio
+#endpoint consulta todos
+@app.get('/todosUsuarios', tags=['operaciones CRUD'])
+def leerUsuarios():
+    return {"Los usuarios registrados son: ": usuarios}
+
+
+
+
+
+""" #endpoit promedio
 @app.get('/promedio')
 def promedio():
     return 10.5
@@ -61,4 +74,4 @@ async def consulta_usuarios(
     if resultados:
         return {"usuarios_encontrados": resultados}
     else:
-        return {"mensaje": "No se encontraron usuarios que coincidan con los parámetros proporcionados."}
+        return {"mensaje": "No se encontraron usuarios que coincidan con los parámetros proporcionados."} """
