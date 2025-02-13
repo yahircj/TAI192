@@ -19,3 +19,10 @@ Tareas = [
 def leerUsuarios():
     return {"Tareas: ": Tareas}
 
+#endpoint consulta individual
+@app.get('/buscarTar/{id}', tags=['operaciones CRUD'])
+def encontrarTarea(id: int):
+    for index, tar in enumerate(Tareas):
+        if tar["id"] == id:
+            return Tareas[index]
+    raise HTTPException(status_code=400, detail="Id inexistente")
