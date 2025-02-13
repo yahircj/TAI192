@@ -36,3 +36,13 @@ def agregarUsuario(tarea:dict):
             raise HTTPException(status_code=400, detail="Id existente")
     Tareas.append(tarea)
     return tarea
+
+
+#endpoint actualizar
+@app.put('/actualizarTarea/{id}', tags=['operaciones CRUD'])
+def actualizarUsuario(id:int, tarea:dict):
+    for index,tar in enumerate(Tareas):
+        if tar["id"]== id:
+                Tareas[index].update(tarea)
+                return Tareas(index)
+    raise HTTPException(status_code=400, detail="Id inexistente")
