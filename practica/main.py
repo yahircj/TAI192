@@ -46,3 +46,12 @@ def actualizarUsuario(id:int, tarea:dict):
                 Tareas[index].update(tarea)
                 return Tareas(index)
     raise HTTPException(status_code=400, detail="Id inexistente")
+
+#endpoint eliminar
+@app.delete('/eliminarTarea/{id}', tags=['operaciones CRUD'])
+def eliminarUsuario(id: int):
+    for index, tar in enumerate(Tareas):
+        if tar["id"] == id:
+            tarea_eliminada = Tareas.pop(index) 
+            return {"Usuario eliminado usuario": tarea_eliminada}
+    raise HTTPException(status_code=400, detail="Id inexistente")
