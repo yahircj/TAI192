@@ -43,6 +43,15 @@ def actualizarUsuario(id:int, usuario:dict):
                 return usuarios(index)
     raise HTTPException(status_code=400, detail="Id inexistente")
 
+#endpoint eliminar
+@app.delete('/eliminarUsuario/{id}', tags=['operaciones CRUD'])
+def eliminarUsuario(id: int):
+    for index, usr in enumerate(usuarios):
+        if usr["id"] == id:
+            usuario_eliminado = usuarios.pop(index) 
+            return {"Usuario eliminado usuario": usuario_eliminado}
+    raise HTTPException(status_code=400, detail="Id inexistente")
+
 
 """ #endpoit promedio
 @app.get('/promedio')
