@@ -26,3 +26,13 @@ def encontrarTarea(id: int):
         if tar["id"] == id:
             return Tareas[index]
     raise HTTPException(status_code=400, detail="Id inexistente")
+
+
+#endpoint Añadir
+@app.post('/addtarea/', tags=['operaciones CRUD'])
+def agregarUsuario(tarea:dict):
+    for tar in Tareas:
+        if tar["id"]== tarea.get("id"):
+            raise HTTPException(status_code=400, detail="Id existente")
+    Tareas.append(tarea)
+    return tarea
