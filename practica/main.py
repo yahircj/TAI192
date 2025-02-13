@@ -12,3 +12,10 @@ Tareas = [
 {"id": 3,"titulo": "Acabar videojuegos","descripcion": "Pasar la campana de death craft ll","vencimiento": "20-02-24", "Estado": "incompleta"},
 {"id": 4,"titulo": "Diseñar","descripcion": "Ver tutoriales de render","vencimiento": "31-02-24", "Estado": "completada"}
 ]
+
+
+#endpoint consulta todos
+@app.get('/Alltareas', tags=['operaciones CRUD'])
+def leerUsuarios():
+    return {"Tareas: ": Tareas}
+
