@@ -16,7 +16,7 @@ Tareas = [
 
 #endpoint consulta todos
 @app.get('/Alltareas', tags=['operaciones CRUD'])
-def leerUsuarios():
+def leerTareas():
     return {"Tareas: ": Tareas}
 
 #endpoint consulta individual
@@ -30,7 +30,7 @@ def encontrarTarea(id: int):
 
 #endpoint Añadir
 @app.post('/addtarea/', tags=['operaciones CRUD'])
-def agregarUsuario(tarea:dict):
+def agregarTarea(tarea:dict):
     for tar in Tareas:
         if tar["id"]== tarea.get("id"):
             raise HTTPException(status_code=400, detail="Id existente")
@@ -40,7 +40,7 @@ def agregarUsuario(tarea:dict):
 
 #endpoint actualizar
 @app.put('/actualizarTarea/{id}', tags=['operaciones CRUD'])
-def actualizarUsuario(id:int, tarea:dict):
+def actualizarTarea(id:int, tarea:dict):
     for index,tar in enumerate(Tareas):
         if tar["id"]== id:
                 Tareas[index].update(tarea)
@@ -49,7 +49,7 @@ def actualizarUsuario(id:int, tarea:dict):
 
 #endpoint eliminar
 @app.delete('/eliminarTarea/{id}', tags=['operaciones CRUD'])
-def eliminarUsuario(id: int):
+def eliminarTarea(id: int):
     for index, tar in enumerate(Tareas):
         if tar["id"] == id:
             tarea_eliminada = Tareas.pop(index) 
