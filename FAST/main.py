@@ -1,6 +1,8 @@
 from fastapi import FastAPI,HTTPException
+from fastapi.responses import JSONResponse
 from typing import Optional, List
-from models import ModelUser
+from modelsPydantic import ModelUser, modeloAuth
+from genToken import createToken
 
 app = FastAPI(
     title='mi primer api',
@@ -36,6 +38,15 @@ def agregarUsuario(usuario:ModelUser):
             raise HTTPException(status_code=400, detail="Id existente")
     usuarios.append(usuario)
     return usuario
+
+@app.post('/auth',  tags=['Autenticación'])
+def login(autorizacion:modeloAuth):
+    if autorizacion.email == '12345a@gmail.com' and autorizacion.passw == '12345678':
+        token:str = createToken(autorizacion.model_dump())
+        print(token)
+        return JSONResponse(content= token)
+    else:
+        return("Usuario no autorizado")
 
 #endpoint actualizar
 @app.put('/actualizarUsuarios/{id}',response_model= ModelUser, tags=['operaciones CRUD'])
