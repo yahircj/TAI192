@@ -1,5 +1,6 @@
 from fastapi import FastAPI,HTTPException, Depends
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
 from typing import Optional, List
 from modelsPydantic import ModelUser, modeloAuth
 from genToken import createToken
@@ -30,9 +31,40 @@ def home():
 
 
 #endpoint consulta todos
-@app.get('/todosUsuarios',dependencies={Depends(BearerJWT())}, response_model= List[ModelUser], tags=['operaciones CRUD'])
+@app.get('/todosUsuarios', tags=['operaciones CRUD'])
 def leerUsuarios():
-    return usuarios
+    db = session()
+    try:
+        consulta= db.query(User).all()
+        return JSONResponse(content= jsonable_encoder(consulta))
+    
+    except Exception as e:
+        return JSONResponse(status_code=500,
+                            content={"message": "Error al consultar",
+                                     "Excepcion": str(e)}) 
+    finally:
+        db.close
+
+
+#buscar 1
+#endpoint consulta todos
+@app.get('/usuario/{id}', tags=['operaciones CRUD'])
+def buscarusuario(id:int):
+    db = session()
+    try:
+        consulta= db.query(User).filter(User.id == id).first()
+        if not consulta:
+             return JSONResponse(content= jsonable_encoder(consulta))
+        
+        return JSONResponse(content= jsonable_encoder(consulta))
+       
+    
+    except Exception as e:
+        return JSONResponse(status_code=500,
+                            content={"message": "Error al consultar",
+                                     "Excepcion": str(e)}) 
+    finally:
+        db.close
 
 #endpoint Añadir
 @app.post('/addUsuarios/', response_model=ModelUser, tags=['operaciones CRUD'])
